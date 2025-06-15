@@ -1,0 +1,75 @@
+.contactPage {
+    padding: 3rem 5%;
+    color: var(--text-primary);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header h1 {
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contactContainer {
+    display: flex;
+    gap: 2rem;
+    background-color: var(--background-light);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.contactInfo {
+    flex: 1;
+}
+
+.contactInfo h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color-light);
+    border-bottom: 2px solid var(--primary-color-dark);
+    padding-bottom: 0.5rem;
+}
+
+.infoItem {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-right: 1.5rem;
+    margin-top: 5px;
+}
+
+.infoItem h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.infoItem p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.mapContainer {
+    flex: 1.5;
+    min-height: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+} 

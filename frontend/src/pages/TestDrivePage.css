@@ -1,0 +1,26 @@
+.test-drive-page {
+    padding: 3rem 5%;
+}
+
+.test-drive-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.test-drive-header h1 {
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.test-drive-header p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.cars-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+} 

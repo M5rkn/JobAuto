@@ -1,0 +1,66 @@
+.welcome-section, .news-section {
+    padding: 6rem 0;
+}
+
+.welcome-section .container, .news-section .container {
+    text-align: center;
+}
+
+.welcome-section {
+    background-color: var(--color-surface);
+}
+
+.welcome-section h2, .news-section h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.welcome-section p, .news-section p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    color: var(--color-text-secondary);
+}
+
+.welcome-section .cta-button {
+    background-color: var(--color-primary);
+    color: var(--color-text-primary);
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+}
+.welcome-section .cta-button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.news-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 4rem auto 0 auto;
+    text-align: left;
+}
+
+.news-item {
+    background-color: var(--color-surface);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+}
+
+.news-item h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.news-date {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-top: 1.5rem;
+} 

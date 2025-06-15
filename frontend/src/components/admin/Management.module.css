@@ -1,0 +1,114 @@
+.management-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.management-table th,
+.management-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--background-dark);
+}
+
+.management-table thead tr {
+    background-color: var(--background-dark);
+    color: var(--primary-color-light);
+    font-weight: 500;
+}
+
+.management-table tbody tr {
+    color: var(--text-primary);
+    transition: background-color 0.3s ease;
+}
+
+.management-table tbody tr:hover {
+    background-color: #3c3c3c;
+}
+
+.management-table select {
+    background-color: var(--background-light);
+    color: var(--text-primary);
+    border: 1px solid var(--primary-color-dark);
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.management-table button,
+.form-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    min-width: 100px;
+    font-size: 1rem;
+}
+
+.delete-btn {
+    background-color: #e53935;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c62828;
+}
+
+.edit-btn {
+    background-color: var(--primary-color);
+    color: var(--background-dark);
+    margin-right: 10px;
+}
+
+.edit-btn:hover {
+    background-color: var(--primary-color-light);
+}
+
+.form-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--background-dark);
+    border-radius: 8px;
+}
+
+.form-container h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.form-container input {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--primary-color-dark);
+    background-color: var(--background-light);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.action-bar {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.action-btn-large {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--background-dark);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.action-btn-large:hover {
+    background-color: var(--primary-color-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+} 

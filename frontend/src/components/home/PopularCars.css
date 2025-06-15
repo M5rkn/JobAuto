@@ -1,0 +1,75 @@
+.popular-cars-section {
+    padding: 6rem 0;
+    background-color: var(--color-background);
+}
+
+.popular-cars-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.popular-cars-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.popular-cars-header h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.popular-cars-header p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--color-text-secondary);
+}
+
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+}
+
+.popular-cars-footer {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.view-all-button {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.view-all-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-primary);
+}
+
+@media screen and (max-width: 768px) {
+    .popular-cars-header h2 {
+        font-size: 2.5rem;
+    }
+    .popular-cars-header p {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cars-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .popular-cars-container {
+        padding: 0 1rem;
+    }
+} 
