@@ -11,11 +11,12 @@ const TestDrivePage = () => {
     const { user } = useContext(AuthContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCar, setSelectedCar] = useState(null);
+    const apiUrl = import.meta.env.VITE_API_URL || '';
 
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const response = await fetch('/api/cars?status=available');
+                const response = await fetch(`${apiUrl}/api/cars?status=available`);
                 const data = await response.json();
                 setCars(data);
             } catch (error) {

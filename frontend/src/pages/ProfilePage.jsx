@@ -13,6 +13,8 @@ const ProfilePage = () => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [name, setName] = useState(user ? user.name : '');
 
+  const apiUrl = import.meta.env.VITE_API_URL || '';
+
   useEffect(() => {
     if (user && user.name !== name) {
       setName(user.name);
@@ -25,10 +27,10 @@ const ProfilePage = () => {
         try {
           setLoading(true);
           const [ordersRes, testDrivesRes] = await Promise.all([
-            fetch('/api/orders/myorders', {
+            fetch(`${apiUrl}/api/orders/myorders`, {
               headers: { 'Authorization': `Bearer ${token}` },
             }),
-            fetch('/api/test-drives/my-drives', {
+            fetch(`${apiUrl}/api/test-drives/my-drives`, {
               headers: { 'Authorization': `Bearer ${token}` },
             }),
           ]);

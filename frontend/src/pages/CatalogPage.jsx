@@ -5,6 +5,7 @@ import CarCard from '../components/home/CarCard';
 import CartContext from '../context/CartContext';
 import './CatalogPage.css';
 
+const apiUrl = import.meta.env.VITE_API_URL || '';
 
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -45,7 +46,7 @@ const CatalogPage = () => {
     }
     const query = params.toString();
     try {
-      const response = await fetch(`/api/cars?${query}`);
+      const response = await fetch(`${apiUrl}/api/cars?${query}`);
       const data = await response.json();
       setCars(data);
     } catch (error) {

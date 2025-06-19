@@ -3,6 +3,8 @@ import { toast } from 'react-hot-toast';
 import AuthContext from '../../context/AuthContext';
 import styles from './Management.module.css';
 
+const apiUrl = import.meta.env.VITE_API_URL || '';
+
 const CarManagement = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ const CarManagement = () => {
 
   const fetchCars = async () => {
     try {
-      const response = await fetch('/api/cars');
+      const response = await fetch(`${apiUrl}/api/cars`);
       if (!response.ok) throw new Error('Не удалось загрузить автомобили');
       const data = await response.json();
       setCars(data);
@@ -71,7 +73,7 @@ const CarManagement = () => {
 
   const handleDelete = async (carId) => {
     try {
-      const response = await fetch(`/api/cars/${carId}`, {
+      const response = await fetch(`${apiUrl}/api/cars/${carId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -85,7 +87,7 @@ const CarManagement = () => {
   };
 
   const handleSave = async (carData) => {
-    const url = isCreating ? '/api/cars' : `/api/cars/${carData._id}`;
+    const url = isCreating ? `${apiUrl}/api/cars` : `${apiUrl}/api/cars/${carData._id}`;
     const method = isCreating ? 'POST' : 'PUT';
 
     try {

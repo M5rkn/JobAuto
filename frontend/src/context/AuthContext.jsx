@@ -3,6 +3,8 @@ import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 
+const apiUrl = import.meta.env.VITE_API_URL || '';
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => localStorage.getItem('token'));
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = useCallback(async (email, password) => {
     try {
-      const response = await fetch('/api/users/login', {
+      const response = await fetch(`${apiUrl}/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -52,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = useCallback(async (name, username, email, password) => {
     try {
-      const response = await fetch('/api/users/register', {
+      const response = await fetch(`${apiUrl}/api/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, username, email, password }),
