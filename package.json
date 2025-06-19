@@ -4,7 +4,8 @@
     "start:frontend": "cd frontend && npm run dev",
     "build:frontend": "cd frontend && npm run build",
     "preview:frontend": "cd frontend && npm run preview -- --host",
-    "lint:frontend": "cd frontend && npm run lint"
+    "lint:frontend": "cd frontend && npm run lint",
+    "build": "cd frontend && npm install && npm run build"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

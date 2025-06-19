@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/db');
 const reviewRoutes = require('./routes/reviewRoutes');
+const path = require('path');
 
 // Подключение к базе данных
 connectDB();
@@ -24,6 +25,14 @@ app.use('/api/reviews', reviewRoutes);
 app.get('/', (req, res) => {
   res.send('Car Dealership API is running...');
 });
+
+if (process.env.NODE_ENV === 'production') {
+  const staticPath = path.join(__dirname, '../frontend/dist');
+  app.use(express.static(staticPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(staticPath, 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 

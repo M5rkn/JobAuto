@@ -47,3 +47,18 @@ JWT_SECRET=
 1.cd backend
 2.npm start
 Открыть сайт по адресу, который покажет консоль (обычно http://localhost:5173).
+
+## Деплой на Railway
+
+1. Залей проект на GitHub.
+2. Создай новый проект на railway.app и выбери свой репозиторий.
+3. В настройках Railway добавь переменные окружения:
+   - MONGO_URI — строка подключения к MongoDB (можно создать через Railway)
+   - JWT_SECRET — любой секрет для JWT
+   - NODE_ENV=production
+4. Railway автоматически выполнит npm install, npm run build и npm start (через Procfile).
+5. После деплоя сайт будет доступен по ссылке Railway.
+
+## Production build
+- Фронтенд собирается в папку frontend/dist и отдаётся через backend.
+- Все API доступны по /api/*
