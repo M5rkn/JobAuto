@@ -1,0 +1,278 @@
+/* Современный стиль для страницы детального авто */
+.car-detail-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem 4rem 1rem;
+  background: var(--color-background);
+  min-height: 100vh;
+}
+
+.car-detail-card {
+  background: var(--color-surface);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(255,77,0,0.10), 0 1.5px 8px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  padding: 2.5rem 2rem;
+  max-width: 900px;
+  width: 100%;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.car-detail-image {
+  width: 350px;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(255,77,0,0.10);
+  background: #181818;
+}
+
+.car-detail-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.car-detail-info h1 {
+  font-size: 2.2rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.car-year, .car-vin, .car-status {
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.car-price {
+  font-size: 1.5rem;
+  color: var(--color-success);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.car-status strong {
+  color: var(--color-primary);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.book-button {
+  margin-top: 1.2rem;
+  padding: 0.9rem 2.2rem;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-hover));
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(255,77,0,0.07);
+  transition: background 0.25s, transform 0.18s, box-shadow 0.18s;
+}
+.book-button:disabled {
+  background: #333;
+  color: #aaa;
+  cursor: not-allowed;
+}
+.book-button:not(:disabled):hover {
+  background: linear-gradient(90deg, #ff7a40, #ff4d00);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(255,77,0,0.13);
+}
+
+.reviews-section {
+  background: var(--color-surface);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(255,77,0,0.07);
+  max-width: 900px;
+  width: 100%;
+  padding: 2rem 2rem 1.5rem 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.7s cubic-bezier(.22,1,.36,1) 0.1s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reviews-section h2 {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.reviews-section ul li {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  animation: fadeInReview 0.5s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay: calc(0.1s + var(--i, 0) * 0.08s);
+}
+
+@keyframes fadeInReview {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reviews-section ul li:hover {
+  box-shadow: 0 4px 16px rgba(255,77,0,0.10);
+  background: rgba(30,30,30,0.97);
+  transition: box-shadow 0.25s, background 0.25s;
+}
+
+form {
+  animation: fadeInForm 0.7s cubic-bezier(.22,1,.36,1) 0.2s both;
+}
+
+@keyframes fadeInForm {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Уменьшаем/отключаем анимации для prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reviews-section,
+  .reviews-section ul li,
+  form {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .car-detail-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0.5rem;
+  }
+  .car-detail-image {
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
+  }
+  .reviews-section {
+    padding: 1.2rem 0.5rem;
+  }
+}
+
+.edit-review-input, .edit-review-btn, .delete-review-btn {
+  animation: fadeInForm 0.5s cubic-bezier(.22,1,.36,1) both;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.edit-review-btn:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+.delete-review-btn:hover {
+  background: #dc3545;
+  color: #fff;
+}
+
+.delete-modal-overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInModalBg 0.25s;
+}
+@keyframes fadeInModalBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.delete-modal {
+  background: var(--color-surface);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(255,77,0,0.13), 0 1.5px 8px rgba(0,0,0,0.25);
+  padding: 2.2rem 2rem 1.5rem 2rem;
+  min-width: 320px;
+  max-width: 95vw;
+  animation: fadeInModal 0.33s cubic-bezier(.22,1,.36,1);
+}
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.95) translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+.delete-modal h3 {
+  color: var(--color-primary);
+  margin-bottom: 0.7rem;
+}
+.delete-modal-btn {
+  min-width: 100px;
+  font-size: 1rem;
+  border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(255,77,0,0.07);
+  transition: background 0.2s, color 0.2s;
+}
+.delete-modal-btn:not(:last-child) {
+  margin-right: 8px;
+}
+@media (max-width: 600px) {
+  .delete-modal { padding: 1.2rem 0.7rem 1rem 0.7rem; min-width: 0; }
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+}
+.review-form-label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--color-text-primary);
+}
+.review-form-stars {
+  margin-bottom: 0.7rem;
+}
+.review-form textarea {
+  width: 100%;
+  min-width: 220px;
+  max-width: 600px;
+  min-height: 70px;
+  max-height: 180px;
+  border-radius: 6px;
+  padding: 0.7rem;
+  font-size: 1rem;
+  resize: vertical;
+  background: #222;
+  color: var(--color-text-primary);
+  border: 1.5px solid var(--color-border);
+  box-shadow: 0 1px 4px rgba(255,77,0,0.04);
+}
+.review-form .book-button {
+  align-self: center;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 0.7rem;
+  font-size: 1.15rem;
+  padding: 1rem 0;
+}
+@media (max-width: 600px) {
+  .review-form textarea {
+    max-width: 100%;
+  }
+  .review-form .book-button {
+    max-width: 100%;
+  }
+} 

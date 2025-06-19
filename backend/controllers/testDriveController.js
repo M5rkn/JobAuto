@@ -1,8 +1,7 @@
 const TestDrive = require('../models/TestDrive');
 const Car = require('../models/Car');
 
-// @desc    Create a new test drive request
-// @route   POST /api/test-drives
+
 exports.createTestDriveRequest = async (req, res) => {
   const { carId, requestedDate, notes } = req.body;
   try {
@@ -24,8 +23,7 @@ exports.createTestDriveRequest = async (req, res) => {
   }
 };
 
-// @desc    Get test drives for the logged-in user
-// @route   GET /api/test-drives/my-drives
+
 exports.getMyTestDrives = async (req, res) => {
   try {
     const testDrives = await TestDrive.find({ user: req.user.id }).sort({ createdAt: -1 });
@@ -35,8 +33,7 @@ exports.getMyTestDrives = async (req, res) => {
   }
 };
 
-// @desc    Get all test drives (for admins/managers)
-// @route   GET /api/test-drives
+
 exports.getAllTestDrives = async (req, res) => {
   try {
     const testDrives = await TestDrive.find().populate('user', 'username email').sort({ createdAt: -1 });
@@ -46,8 +43,7 @@ exports.getAllTestDrives = async (req, res) => {
   }
 };
 
-// @desc    Update test drive status
-// @route   PUT /api/test-drives/:id
+
 exports.updateTestDriveStatus = async (req, res) => {
   const { status } = req.body;
   try {
@@ -59,5 +55,16 @@ exports.updateTestDriveStatus = async (req, res) => {
     res.json(testDrive);
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+exports.deleteTestDrive = async (req, res) => {
+  try {
+    const testDrive = await TestDrive.findById(req.params.id);
+    if (!testDrive) return res.status(404).json({ message: 'Заявка не найдена' });
+    await testDrive.deleteOne();
+    res.json({ message: 'Заявка удалена' });
+  } catch {
+    res.status(500).json({ message: 'Ошибка сервера' });
   }
 }; 

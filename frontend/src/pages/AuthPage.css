@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     padding: 4rem 2rem;
-    min-height: calc(100vh - 200px); /* Adjust based on header/footer height */
+    min-height: calc(100vh - 200px);
 }
 
 .auth-form-container {

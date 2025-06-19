@@ -5,7 +5,7 @@ import CarCard from '../components/home/CarCard';
 import CartContext from '../context/CartContext';
 import './CatalogPage.css';
 
-// Custom hook for debounce
+
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
@@ -34,20 +34,15 @@ const CatalogPage = () => {
 
   const fetchCars = useCallback(async () => {
     setLoading(true);
-    const params = new URLSearchParams(filters);
-    
+    const params = new URLSearchParams();
+    Object.entries(filters).forEach(([key, val]) => {
+      if (val !== null && val !== '' && val !== undefined) {
+        params.set(key, val);
+      }
+    });
     if (debouncedSearchTerm) {
       params.set('searchTerm', debouncedSearchTerm);
-    } else {
-      params.delete('searchTerm');
     }
-
-    for (let key of params.keys()) {
-        if (!params.get(key)) {
-            params.delete(key);
-        }
-    }
-
     const query = params.toString();
     try {
       const response = await fetch(`/api/cars?${query}`);

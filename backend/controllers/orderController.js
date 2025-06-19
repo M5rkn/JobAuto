@@ -2,11 +2,9 @@ const Order = require('../models/Order');
 const Cart = require('../models/Cart');
 const Car = require('../models/Car');
 
-// @desc    Get logged in user orders
-// @access  Private
+
 const getMyOrders = async (req, res) => {
   try {
-    // Re-populate car for backward compatibility with old orders
     const orders = await Order.find({ user: req.user.id }).populate('car', 'brand model');
     res.json(orders);
   } catch (err) {
@@ -15,11 +13,9 @@ const getMyOrders = async (req, res) => {
   }
 };
 
-// @desc    Get all orders
-// @access  Private/Admin/Manager
+
 const getOrders = async (req, res) => {
   try {
-    // Re-populate car for backward compatibility
     const orders = await Order.find().populate('user', 'username email').populate('car', 'brand model');
     res.json(orders);
   } catch (err) {
@@ -28,8 +24,7 @@ const getOrders = async (req, res) => {
   }
 };
 
-// @desc    Update order status
-// @access  Private/Admin/Manager
+
 const updateOrderStatus = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -38,7 +33,7 @@ const updateOrderStatus = async (req, res) => {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    // --- Data Migration Patch for old orders ---
+
     if (!order.carDetails || !order.carDetails.brand) {
       const carData = await Car.findById(order.car);
       if (carData) {
@@ -51,7 +46,6 @@ const updateOrderStatus = async (req, res) => {
           priceAtOrder: carData.price,
         });
       } else {
-        // Fallback for deleted cars to prevent validation error
         order.set({
           carDetails: {
             brand: 'Deleted',
@@ -62,7 +56,7 @@ const updateOrderStatus = async (req, res) => {
         });
       }
     }
-    // --- End of Patch ---
+
 
     const oldStatus = order.status;
     order.status = req.body.status;
@@ -70,7 +64,7 @@ const updateOrderStatus = async (req, res) => {
     const car = await Car.findById(order.car);
     if (car) {
       if (oldStatus !== 'Confirmed' && order.status === 'Confirmed') {
-        car.status = 'reserved';
+        car.status = 'sold';
         await car.save();
       } else if (oldStatus === 'Confirmed' && order.status === 'Cancelled') {
         car.status = 'available';
@@ -120,9 +114,7 @@ const createOrderFromCart = async (req, res) => {
   }
 };
 
-// @desc    Delete an order
-// @route   DELETE /api/orders/:id
-// @access  Private/Admin/Manager
+
 const deleteOrder = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -131,12 +123,9 @@ const deleteOrder = async (req, res) => {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    // Optional: Add logic to check if order status is 'Cancelled' before allowing deletion
-    // if (order.status !== 'Cancelled') {
-    //   return res.status(400).json({ message: 'Only cancelled orders can be deleted' });
-    // }
 
-    await order.deleteOne(); // Mongoose v6+ uses deleteOne()
+
+    await order.deleteOne(); 
 
     res.json({ message: 'Order removed' });
   } catch (err) {

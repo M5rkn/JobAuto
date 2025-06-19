@@ -4,7 +4,8 @@ const {
     createTestDriveRequest,
     getMyTestDrives,
     getAllTestDrives,
-    updateTestDriveStatus 
+    updateTestDriveStatus,
+    deleteTestDrive
 } = require('../controllers/testDriveController');
 const { protect, isAdminOrManager } = require('../middleware/authMiddleware');
 
@@ -32,5 +33,10 @@ router.get('/', protect, isAdminOrManager, getAllTestDrives);
 // @desc     Update a test drive request status
 // @access   Private/Admin/Manager
 router.put('/:id', protect, isAdminOrManager, updateTestDriveStatus);
+
+// @route    DELETE api/test-drives/:id
+// @desc     Delete a test drive request (only for admin/manager)
+// @access   Private/Admin/Manager
+router.delete('/:id', protect, isAdminOrManager, deleteTestDrive);
 
 module.exports = router; 

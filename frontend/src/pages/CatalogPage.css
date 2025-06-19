@@ -52,10 +52,24 @@
   gap: 2rem;
 }
 
-/* Responsive styles */
+.catalog-page-header, .search-bar, .cars-list {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInSection 0.8s cubic-bezier(.22,1,.36,1) forwards;
+}
+.catalog-page-header { animation-delay: 0.1s; }
+.search-bar { animation-delay: 0.2s; }
+.cars-list { animation-delay: 0.3s; }
+@keyframes fadeInSection {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (max-width: 992px) {
   .catalog-layout {
-    grid-template-columns: 1fr; /* Stack filters on top */
+    grid-template-columns: 1fr; 
   }
 } 
 

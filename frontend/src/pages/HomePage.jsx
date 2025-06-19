@@ -7,8 +7,6 @@ import './HomePage.css';
 const HomePage = () => {
     
   const handleAddToCart = (carId) => {
-    // This is a placeholder. In a real app, this would dispatch to a context/reducer.
-    console.log(`Added car with ID ${carId} to cart.`);
   };
 
   return (

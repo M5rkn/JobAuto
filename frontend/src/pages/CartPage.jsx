@@ -17,6 +17,7 @@ const CartPage = () => {
 
   const cartItems = cart?.items || [];
   const total = cartItems.reduce((sum, item) => sum + item.car.price, 0);
+  const hasSold = cartItems.some(item => item.car.status === 'sold');
   
   const handleRemove = async (carId) => {
     const result = await removeFromCart(carId);
@@ -28,6 +29,10 @@ const CartPage = () => {
   };
 
   const handlePlaceOrder = async () => {
+    if (hasSold) {
+      toast.error('В корзине есть проданные автомобили. Удалите их, чтобы оформить заказ.');
+      return;
+    }
     const result = await placeOrder();
     if (result.success) {
       toast.success(result.message);
@@ -58,6 +63,7 @@ const CartPage = () => {
                     <h3>{item.car.brand} {item.car.model}</h3>
                     <p>Год: {item.car.year}</p>
                     <p className="price">${item.car.price.toLocaleString()}</p>
+                    {item.car.status === 'sold' && <p style={{color:'var(--color-error)', fontWeight:600}}>Продано</p>}
                   </div>
                   <button onClick={() => handleRemove(item.car._id)} className="remove-item-btn"><RemoveIcon/></button>
                 </div>
@@ -77,7 +83,7 @@ const CartPage = () => {
                 <span>Итог</span>
                 <span>${total.toLocaleString()}</span>
               </div>
-              <button onClick={handlePlaceOrder} className="checkout-button">Оформить заказ</button>
+              <button onClick={handlePlaceOrder} className="checkout-button" disabled={hasSold}>Оформить заказ</button>
             </aside>
           </div>
         )}

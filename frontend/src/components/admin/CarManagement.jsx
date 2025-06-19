@@ -99,7 +99,7 @@ const CarManagement = () => {
       });
       if (!response.ok) throw new Error(`Не удалось ${isCreating ? 'создать' : 'обновить'} автомобиль`);
       
-      await fetchCars(); // Refetch all cars to get the latest data
+      await fetchCars(); 
       setEditingCar(null);
     } catch (err) {
       setError(err.message);
@@ -157,6 +157,17 @@ const CarManagement = () => {
 
 const CarForm = ({ car, onSave, onCancel, isCreating }) => {
   const [formData, setFormData] = useState(car);
+  const [formErrors, setFormErrors] = useState({});
+
+  const validate = () => {
+    const errors = {};
+    if (!formData.brand.trim()) errors.brand = 'Бренд обязателен';
+    if (!formData.model.trim()) errors.model = 'Модель обязательна';
+    if (!formData.year || isNaN(formData.year) || formData.year < 1900 || formData.year > new Date().getFullYear() + 1) errors.year = 'Год некорректен';
+    if (!formData.price || isNaN(formData.price) || formData.price <= 0) errors.price = 'Цена некорректна';
+    if (!formData.vin.trim() || formData.vin.length < 10) errors.vin = 'VIN должен быть не менее 10 символов';
+    return errors;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -165,6 +176,9 @@ const CarForm = ({ car, onSave, onCancel, isCreating }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const errors = validate();
+    setFormErrors(errors);
+    if (Object.keys(errors).length > 0) return;
     onSave(formData);
   };
 
@@ -173,10 +187,15 @@ const CarForm = ({ car, onSave, onCancel, isCreating }) => {
         <form onSubmit={handleSubmit}>
           <h4>{isCreating ? 'Добавить' : 'Редактировать'} автомобиль</h4>
           <input name="brand" value={formData.brand} onChange={handleChange} placeholder="Бренд" required />
+          {formErrors.brand && <span className={styles['error-message']}>{formErrors.brand}</span>}
           <input name="model" value={formData.model} onChange={handleChange} placeholder="Модель" required />
+          {formErrors.model && <span className={styles['error-message']}>{formErrors.model}</span>}
           <input name="year" type="number" value={formData.year} onChange={handleChange} placeholder="Год" required />
+          {formErrors.year && <span className={styles['error-message']}>{formErrors.year}</span>}
           <input name="price" type="number" value={formData.price} onChange={handleChange} placeholder="Цена" required />
+          {formErrors.price && <span className={styles['error-message']}>{formErrors.price}</span>}
           <input name="vin" value={formData.vin} onChange={handleChange} placeholder="VIN" required />
+          {formErrors.vin && <span className={styles['error-message']}>{formErrors.vin}</span>}
           <input name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="URL изображения" />
           <div className={styles['modal-buttons']}>
             <button type="submit" className={styles['edit-btn']}>Сохранить</button>

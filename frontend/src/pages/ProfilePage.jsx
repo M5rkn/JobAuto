@@ -9,7 +9,7 @@ const ProfilePage = () => {
   const [testDrives, setTestDrives] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Состояние для редактирования имени
+
   const [isEditingName, setIsEditingName] = useState(false);
   const [name, setName] = useState(user ? user.name : '');
 
@@ -43,7 +43,6 @@ const ProfilePage = () => {
           setTestDrives(testDrivesData);
         } catch (error) {
           console.error(error);
-          // Optional: Show toast notification for errors
         } finally {
           setLoading(false);
         }

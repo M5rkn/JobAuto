@@ -9,6 +9,16 @@
     box-shadow: var(--shadow-md);
     text-decoration: none;
     color: var(--color-text-primary);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInCard 0.7s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+@keyframes fadeInCard {
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .car-card:hover {

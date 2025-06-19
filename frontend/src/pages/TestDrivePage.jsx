@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { toast } from 'react-hot-toast';
 import AuthContext from '../context/AuthContext';
-import CarCard from '../components/home/CarCard'; // We'll adapt this later
-import TestDriveModal from '../components/common/TestDriveModal'; // Import the modal
+import CarCard from '../components/home/CarCard';
+import TestDriveModal from '../components/common/TestDriveModal'; 
 import './TestDrivePage.css';
 
 const TestDrivePage = () => {
@@ -61,7 +61,6 @@ const TestDrivePage = () => {
                     car={selectedCar} 
                     onClose={() => setIsModalOpen(false)}
                     onBookingSuccess={() => {
-                        // Optionally refresh data or give other feedback
                     }}
                 />
             )}

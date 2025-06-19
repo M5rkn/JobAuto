@@ -40,7 +40,7 @@ const PopularCars = ({ onAddToCart }) => {
         </div>
         <div className="cars-grid">
           {popularCarsData.map((car) => (
-            <CarCard key={car.id} car={car} onAddToCart={onAddToCart} />
+            <CarCard key={car.id} car={car} onAddToCart={onAddToCart} clickable={false} />
           ))}
         </div>
         <div className="popular-cars-footer">

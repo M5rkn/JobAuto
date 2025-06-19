@@ -1,9 +1,7 @@
 const Cart = require('../models/Cart');
 const Car = require('../models/Car');
 
-// @desc    Get user's cart
-// @route   GET /api/cart
-// @access  Private
+
 exports.getCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.id }).populate('items.car');
@@ -17,9 +15,7 @@ exports.getCart = async (req, res) => {
   }
 };
 
-// @desc    Add item to cart
-// @route   POST /api/cart/add
-// @access  Private
+
 exports.addToCart = async (req, res) => {
   const { carId } = req.body;
 
@@ -38,7 +34,7 @@ exports.addToCart = async (req, res) => {
     const itemIndex = cart.items.findIndex(item => item.car.toString() === carId);
 
     if (itemIndex > -1) {
-      // For now, we assume quantity is always 1 and don't increment.
+      
       return res.status(400).json({ msg: 'Item already in cart' });
     } else {
       cart.items.push({ car: carId, quantity: 1 });
@@ -54,9 +50,7 @@ exports.addToCart = async (req, res) => {
   }
 };
 
-// @desc    Remove item from cart
-// @route   DELETE /api/cart/remove/:carId
-// @access  Private
+
 exports.removeFromCart = async (req, res) => {
   const { carId } = req.params;
 

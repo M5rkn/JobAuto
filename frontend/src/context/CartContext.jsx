@@ -36,7 +36,6 @@ export const CartProvider = ({ children }) => {
   }, [user, token]);
 
   const addToCart = async (carId) => {
-    console.log('addToCart called in CartContext. Token:', token, 'Car ID:', carId);
     if (!token) {
       return { success: false, message: 'Пожалуйста, войдите в аккаунт, чтобы добавить товар в корзину.' };
     }

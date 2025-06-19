@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
   },
 }, {
-  timestamps: true // Автоматически добавляет createdAt и updatedAt
+  timestamps: true 
 });
 
 module.exports = mongoose.model('User', userSchema); 

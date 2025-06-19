@@ -8,11 +8,11 @@ const TestDriveManagement = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const { token } = useContext(AuthContext);
+  const [deleteModal, setDeleteModal] = useState({ open: false, driveId: null });
 
   useEffect(() => {
     const fetchTestDrives = async () => {
       try {
-        // Используем эндпоинт, который мы создали ранее
         const response = await fetch('/api/test-drives/all', {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -56,6 +56,30 @@ const TestDriveManagement = () => {
     }
   };
 
+  const openDeleteModal = (driveId) => setDeleteModal({ open: true, driveId });
+  const closeDeleteModal = () => setDeleteModal({ open: false, driveId: null });
+
+  const handleDelete = async () => {
+    const driveId = deleteModal.driveId;
+    if (!driveId) return;
+    try {
+      const response = await fetch(`/api/test-drives/${driveId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Ошибка при удалении заявки');
+      }
+      setTestDrives(testDrives.filter(d => d._id !== driveId));
+      closeDeleteModal();
+      toast.success('Заявка удалена');
+    } catch (err) {
+      toast.error(err.message);
+      closeDeleteModal();
+    }
+  };
+
   if (loading) return <p>Загрузка заявок на тест-драйв...</p>;
   if (error) return <p>Ошибка: {error}</p>;
 
@@ -83,11 +107,26 @@ const TestDriveManagement = () => {
                 <button onClick={() => handleStatusChange(drive._id, 'Confirmed')} className={styles['edit-btn']}>Подтвердить</button>
                 <button onClick={() => handleStatusChange(drive._id, 'Completed')} className={styles['edit-btn']}>Завершен</button>
                 <button onClick={() => handleStatusChange(drive._id, 'Cancelled')} className={styles['delete-btn']}>Отменить</button>
+                {drive.status === 'Cancelled' && (
+                  <button onClick={() => openDeleteModal(drive._id)} className={styles['delete-btn']} style={{marginLeft:8}}>Удалить</button>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {deleteModal.open && (
+        <div className={styles['modalOverlay']}>
+          <div className={styles['modalContent']} style={{maxWidth:380}}>
+            <h3 style={{color:'var(--primary-color)', marginBottom:10}}>Удалить заявку?</h3>
+            <p style={{color:'var(--text-secondary)', marginBottom:18}}>Это действие необратимо.</p>
+            <div style={{display:'flex', gap:16, justifyContent:'flex-end'}}>
+              <button onClick={handleDelete} className={styles['edit-btn']} style={{background:'var(--primary-color)', color:'#fff'}}>Удалить</button>
+              <button onClick={closeDeleteModal} className={styles['delete-btn']} style={{background:'#333', color:'#fff'}}>Отмена</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

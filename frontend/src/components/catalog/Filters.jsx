@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Filters.css';
 
 const Filters = ({ filters, setFilters }) => {
+  const [formErrors, setFormErrors] = useState({});
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    let val = value;
+    if (name === 'minPrice' || name === 'maxPrice') {
+      val = value === '' ? null : Number(value);
+    }
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [name]: value,
+      [name]: val,
     }));
+    // Валидация
+    if ((name === 'minPrice' || name === 'maxPrice') && value) {
+      if (isNaN(value) || Number(value) < 0) {
+        setFormErrors((prev) => ({ ...prev, [name]: 'Цена должна быть положительным числом' }));
+      } else {
+        setFormErrors((prev) => ({ ...prev, [name]: undefined }));
+      }
+    }
+    if (name === 'minPrice' && filters.maxPrice && Number(value) > Number(filters.maxPrice)) {
+      setFormErrors((prev) => ({ ...prev, minPrice: 'Минимальная цена не может быть больше максимальной' }));
+    }
+    if (name === 'maxPrice' && filters.minPrice && Number(value) < Number(filters.minPrice)) {
+      setFormErrors((prev) => ({ ...prev, maxPrice: 'Максимальная цена не может быть меньше минимальной' }));
+    }
   };
 
   return (
@@ -28,7 +48,6 @@ const Filters = ({ filters, setFilters }) => {
         <select name="status" value={filters.status} onChange={handleInputChange}>
           <option value="">Любой</option>
           <option value="available">В наличии</option>
-          <option value="reserved">В резерве</option>
           <option value="sold">Продан</option>
         </select>
       </div>
@@ -39,17 +58,19 @@ const Filters = ({ filters, setFilters }) => {
             type="number"
             name="minPrice"
             placeholder="От"
-            value={filters.minPrice}
+            value={filters.minPrice ?? ''}
             onChange={handleInputChange}
           />
           <input
             type="number"
             name="maxPrice"
             placeholder="До"
-            value={filters.maxPrice}
+            value={filters.maxPrice ?? ''}
             onChange={handleInputChange}
           />
         </div>
+        {formErrors.minPrice && <span style={{color: 'var(--color-error)'}}>{formErrors.minPrice}</span>}
+        {formErrors.maxPrice && <span style={{color: 'var(--color-error)'}}>{formErrors.maxPrice}</span>}
       </div>
     </aside>
   );

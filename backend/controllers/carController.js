@@ -1,8 +1,7 @@
 const Car = require('../models/Car');
 
-// @desc    Get all cars
-// @route   GET /api/cars
-// @access  Public
+
+
 const getCars = async (req, res) => {
   try {
     const { brand, status, minPrice, maxPrice, searchTerm } = req.query;
@@ -42,9 +41,7 @@ const getCars = async (req, res) => {
   }
 };
 
-// @desc    Get car by ID
-// @route   GET /api/cars/:id
-// @access  Public
+
 const getCarById = async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
@@ -63,9 +60,7 @@ const getCarById = async (req, res) => {
   }
 };
 
-// @desc    Create a car
-// @route   POST /api/cars
-// @access  Private (Admin/Manager)
+
 const createCar = async (req, res) => {
     const { brand, model, year, price, vin, imageUrl } = req.body;
 
@@ -87,9 +82,7 @@ const createCar = async (req, res) => {
     }
 };
 
-// @desc    Update a car
-// @route   PUT /api/cars/:id
-// @access  Private (Admin/Manager)
+
 const updateCar = async (req, res) => {
     const { brand, model, year, price, vin, imageUrl, status } = req.body;
 
@@ -116,9 +109,7 @@ const updateCar = async (req, res) => {
     }
 };
 
-// @desc    Delete a car
-// @route   DELETE /api/cars/:id
-// @access  Private (Admin/Manager)
+
 const deleteCar = async (req, res) => {
     try {
         const car = await Car.findById(req.params.id);

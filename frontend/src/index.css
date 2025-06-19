@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap');
 
 :root {
-  /* Solar Flare Theme */
   --color-background: #121212;
   --color-surface: #1E1E1E;
-  --color-primary: #FF4D00; /* Vibrant Orange */
+  --color-primary: #FF4D00; 
   --color-primary-hover: #FF7A40;
   
   --color-text-primary: #FFFFFF;
@@ -21,7 +20,7 @@
   --font-primary: 'Poppins', sans-serif;
   --font-secondary: 'Inter', sans-serif;
 
-  --primary-color: #ff8c00; /* Deep Orange */
+  --primary-color: #ff8c00; 
 }
 
 *,
@@ -98,12 +97,13 @@ button {
     padding: 0 2rem;
 }
 
-/* Hide arrows from number inputs */
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
 }
 input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
-} 
+}

@@ -2,11 +2,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { validationResult } = require('express-validator');
+const nodemailer = require('nodemailer');
 
 const MAX_LOGIN_ATTEMPTS = 10;
 const LOCK_TIME = 15 * 60 * 1000; // 15 minutes
 
-// @desc    Register a new user
 const registerUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 
     await user.save();
 
-    res.status(201).json({ message: 'Пользователь успешно зарегистрирован' });
+    res.status(201).json({ message: 'Пользователь успешно зарегистрирован. Проверьте почту для подтверждения.' });
 
   } catch (err) {
     console.error(err.message);
@@ -42,7 +42,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-// @desc    Authenticate user & get token
+
 const loginUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -83,7 +83,7 @@ const loginUser = async (req, res) => {
     user.loginAttempts = 0;
     user.lockUntil = null;
     
-    // Fix for older accounts that don't have a name
+
     if (!user.name) {
       user.name = user.username;
     }
@@ -106,8 +106,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-// @desc    Get all users
-// @access  Private/Admin
+
 const getUsers = async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -118,8 +117,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-// @desc    Update user role
-// @access  Private/Admin
+
 const updateUserRole = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -137,8 +135,7 @@ const updateUserRole = async (req, res) => {
   }
 };
 
-// @desc    Update user profile
-// @access  Private
+
 const updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -149,7 +146,7 @@ const updateUserProfile = async (req, res) => {
       
       const updatedUser = await user.save();
 
-      // Генерируем новый токен с обновленными данными
+
       const payload = { user: { id: updatedUser.id, role: updatedUser.role, name: updatedUser.name, email: updatedUser.email } };
       jwt.sign(
         payload,

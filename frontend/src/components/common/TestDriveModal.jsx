@@ -8,9 +8,24 @@ const TestDriveModal = ({ car, onClose, onBookingSuccess }) => {
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
   const { token } = useContext(AuthContext);
+  const [formErrors, setFormErrors] = useState({});
+
+  const validate = () => {
+    const errors = {};
+    if (!requestedDate) errors.requestedDate = 'Дата обязательна';
+    else if (new Date(requestedDate) < new Date(new Date().toDateString())) errors.requestedDate = 'Дата не может быть в прошлом';
+    return errors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = validate();
+    setFormErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+    if (!token) {
+      toast.error('Для записи на тест-драйв необходимо войти в аккаунт.');
+      return;
+    }
     setLoading(true);
 
     try {
@@ -58,16 +73,7 @@ const TestDriveModal = ({ car, onClose, onBookingSuccess }) => {
               onChange={(e) => setRequestedDate(e.target.value)}
               required
             />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="notes">Комментарии (необязательно)</label>
-            <textarea
-              id="notes"
-              rows="4"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Есть особые пожелания?"
-            ></textarea>
+            {formErrors.requestedDate && <span className={styles['error-message']}>{formErrors.requestedDate}</span>}
           </div>
           <button type="submit" className={styles.submitButton} disabled={loading}>
             {loading ? 'Отправка...' : 'Отправить заявку'}
